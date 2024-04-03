@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: aliceblue;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+            border: none;
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        .edit-mode {
+            background-color: #d5f5e3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a new task...">
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById('taskInput');
+        const taskList = document.getElementById('taskList');
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText !== '') {
+                const li = document.createElement('li');
+                li.textContent = taskText;
+                li.innerHTML += ' <button onclick="editTask(this)">Edit</button>';
+                li.innerHTML += ' <button onclick="deleteTask(this)">Delete</button>';
+                taskList.appendChild(li);
+                taskInput.value = '';
+            }
+        }
+
+        function editTask(button) {
+            const li = button.parentElement;
+            const newText = prompt('Edit task:', li.textContent);
+            if (newText !== null) {
+                li.textContent = newText;
+                li.innerHTML += ' <button onclick="editTask(this)">Edit</button>';
+                li.innerHTML += ' <button onclick="deleteTask(this)">Delete</button>';
+            }
+        }
+
+        function deleteTask(button) {
+            const li = button.parentElement;
+            taskList.removeChild(li);
+        }
+
+        taskInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+</body>
+</html>
